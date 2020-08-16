@@ -1,0 +1,66 @@
+.hero {
+  @include breakpoint-up(large) {
+    display: flex;
+    align-items: center;
+  }
+
+  &__image {
+    position: relative;
+    background-image: url("/images/bg-intro-mobile.svg");
+    // Fills the space (cover the entire div) but keeps aspect ratio (doesn't stretch)
+    background-size: cover;
+    background-repeat: no-repeat;
+    // Center in div
+    background-position: center center;
+    min-height: 17.5rem;
+
+    @include breakpoint-up(large) {
+      flex: 3;
+      order: 2;
+      // Originally had height set on parent
+      // But flexbox styles things based on content
+      // Image doesn't have content, so looks to text for height
+      // So need to set height on image
+      height: 41rem;
+      background-image: url("/images/bg-intro-desktop.svg");
+      background-position: left center;
+    }
+
+    // First child
+    &::before {
+      // Pseudo-elements always needs content
+      content: "";
+      position: absolute;
+      // Match width & height of the parent
+      width: 100%;
+      height: 100%;
+      background-image: url("/images/image-mockups.png");
+      background-size: 93%;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+    }
+  }
+
+  &__text {
+    text-align: center;
+
+    @include breakpoint-up(large) {
+      flex: 2;
+      order: 1;
+    }
+
+    h1 {
+      font-weight: 300;
+      font-size: 2.3125rem;
+      line-height: 1.15;
+      color: $darkBlue;
+      // Add space to the bottom if you want space between elements instead of both top and bottom
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      line-height: 1.5;
+      margin-bottom: 2.25rem;
+    }
+  }
+}
