@@ -1,7 +1,11 @@
 .hero {
-  @include breakpoint-up(large) {
-    display: flex;
-    align-items: center;
+  background-color: $veryLightGray;
+
+  .container {
+    @include breakpoint-up(large) {
+      display: flex;
+      align-items: center;
+    }
   }
 
   &__image {
@@ -14,6 +18,11 @@
     background-position: center center;
     min-height: 17.5rem;
 
+    @include breakpoint-up(medium) {
+      min-height: 25rem;
+      background-position: center 60%;
+    }
+
     @include breakpoint-up(large) {
       flex: 3;
       order: 2;
@@ -22,12 +31,34 @@
       // Image doesn't have content, so looks to text for height
       // So need to set height on image
       height: 41rem;
-      background-image: url("/images/bg-intro-desktop.svg");
-      background-position: left center;
+      background-image: none;
+      //   background-image: url("/images/bg-intro-desktop.svg");
+      //   background-position: left center;
     }
 
     // First child
+    // If you don't specify z-index, places later elements on top of before elements
     &::before {
+      // Pseudo-elements always needs content
+      content: "";
+      position: absolute;
+      // Match width & height of the parent
+      height: 100%;
+      background-image: url("/images/bg-intro-desktop.svg");
+      background-size: 93%;
+      background-repeat: no-repeat;
+      // Adjusting position of background image within the container div, won't show overlap
+      background-position: center bottom;
+
+      @include breakpoint-up(large) {
+        width: 150%;
+        background-size: 122%;
+        background-position: 0% 83%;
+      }
+    }
+
+    // Last child
+    &::after {
       // Pseudo-elements always needs content
       content: "";
       position: absolute;
@@ -38,15 +69,29 @@
       background-size: 93%;
       background-repeat: no-repeat;
       background-position: center bottom;
+
+      @include breakpoint-up(medium) {
+        background-size: 52%;
+      }
+
+      @include breakpoint-up(large) {
+        width: 120%;
+        height: 122%;
+        background-size: 94%;
+        background-position: center 150%;
+        left: 22%;
+      }
     }
   }
 
   &__text {
+    // Mobile style is default
     text-align: center;
 
     @include breakpoint-up(large) {
       flex: 2;
       order: 1;
+      text-align: left;
     }
 
     h1 {
@@ -56,6 +101,10 @@
       color: $darkBlue;
       // Add space to the bottom if you want space between elements instead of both top and bottom
       margin-bottom: 1.5rem;
+
+      @include breakpoint-up(large) {
+        font-size: $font-xlg;
+      }
     }
 
     p {
