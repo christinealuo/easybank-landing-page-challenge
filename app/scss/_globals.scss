@@ -18,7 +18,8 @@ body {
   font-weight: 300;
   color: $grayishBlue;
   line-height: 1.3;
-  min-height: 200vh; // For scrolling
+  min-height: 200vh; // For vertical scrolling
+  overflow-x: hidden; // Trim any extra content horizontally
 
   @include breakpoint-up(large) {
     font-size: $font-med;
@@ -148,9 +149,10 @@ a:hover {
 button,
 .button {
   // Move button out of the padding (anchor tags are by default display inline)
+  position: relative;
   display: inline-block;
   padding: 0.875rem 2.1875rem;
-  background: linear-gradient(to right, $limeGreen, $brightCyan);
+  background-image: linear-gradient(to right, $limeGreen, $brightCyan);
   border: 0;
   border-radius: 50px;
   cursor: pointer;
@@ -158,9 +160,24 @@ button,
   font-weight: 400;
   font-size: $font-sm;
   transition: opacity 300ms ease-in-out;
+  overflow: hidden; // Hide corners of the overlay
 
-  &:hover {
-    opacity: 0.75;
+  // White overlay on top of the button when you hover over it
+  &::before {
+    content: "";
+    position: absolute;
+    // Touch all four sides
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.25);
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
+  }
+
+  &:hover::before {
+    opacity: 1;
   }
 }
 
